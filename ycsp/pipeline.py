@@ -37,8 +37,7 @@ def __parse_args() -> tuple[str, str]:
     """
 
     # Default output directory
-    directory_of_current_script = os.path.dirname(os.path.realpath(__file__))
-    resources_dir = path.join(directory_of_current_script, '..', 'resources')
+    resources_dir = path.join('./', 'resources')
 
     parser = argparse.ArgumentParser(description="Youtube captions & subclips pipeline script.")
     parser.add_argument("-i", "--input", help="처리할 Youtube URL 리스트가 저장된 input file path", required=True)
