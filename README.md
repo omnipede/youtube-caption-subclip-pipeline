@@ -2,9 +2,20 @@
 
 유튜브에서 동영상을 다운로드 받고, 자막 (caption) 을 line by line 으로 분리한 뒤, 자막 단위로 동영상을 분리 (subclip) 하여 저장하는 데이터 파이프라인 스크립트.
 
+## Requirements
+* ```python``` >= 3.9.0
+
 ## 설치 방법
 
+```
+$ pip install -r requirements.txt
+```
+
 ## 사용 방법
+
+```
+$ python -m src.main -i ./example.txt
+```
 
 ## 주의 사항
 
@@ -13,4 +24,4 @@
 
 ## TODO
 
-* Freeze conda env
+* Rename module
