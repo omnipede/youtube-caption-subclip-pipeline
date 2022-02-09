@@ -25,7 +25,7 @@ def execute() -> None:
 
     # Download files
     for url in urls:
-        __download_and_split_into_clips(url)
+        __download_and_split_into_clips(url, output_dir_path)
 
 
 def __parse_args() -> tuple[str, str]:
@@ -66,20 +66,23 @@ def __read_youtube_url_from_input_file(input_file_path: str) -> list[str]:
         return f.readlines()
 
 
-def __download_and_split_into_clips(url: str) -> None:
+def __download_and_split_into_clips(url: str, resources_dir: str) -> None:
     """
     Youtube url 로 음원을 받고 클립으로 나누는 메소드
     :param url: Youtube URL
+    :param resources_dir: 클립을 저장할 경로
     """
 
     logger.info(f"Processing {url}")
 
-    # 리소스 저장 위치
-    directory_of_current_script = os.path.dirname(os.path.realpath(__file__))
-    resources_dir = path.join(directory_of_current_script, '..', 'resources')
+    # 리소스 저장 위치 확인
     if not path.exists(resources_dir):
-        logger.info("Creating resource dir: {}", resources_dir)
+        logger.info(f"Creating resource dir: {resources_dir}")
         os.mkdir(resources_dir)
+
+    # 저장 위치가 디렉토리가 아닌 경우
+    if not path.isdir(resources_dir):
+        raise NotADirectoryError(f"{resources_dir} is not directory")
 
     # Download youtube file
     yt = YouTube(url)
@@ -99,7 +102,7 @@ def __download_and_split_into_clips(url: str) -> None:
     # ./resources/{music_title}/clips/ 디렉토리에 샘플을 저장한다.
     clips_dir = path.join(resources_dir, tube_title, 'clips')
     if not path.exists(clips_dir):
-        logger.info("Creating clip dir: {}", clips_dir)
+        logger.info(f"Creating clip dir: {clips_dir}")
         os.mkdir(clips_dir)
 
     # Get EN captions
@@ -131,7 +134,7 @@ def __download_and_split_into_clips(url: str) -> None:
         clip_mp4_path = path.join(clips_dir, clip_name + ".mp4")
         clip_caption_path = path.join(clips_dir, clip_name + ".txt")
 
-        logger.info(f"Writing clip: {clip_mp4_path}")
+        logger.info(f"Creating {clip_mp4_path}")
         __ffmpeg_extract_subclip(original_file_loc, start_at, end_at, clip_mp4_path)
 
         with open(clip_caption_path, 'w') as f:
