@@ -4,9 +4,17 @@
 
 ## Requirements
 * ```python``` >= 3.9.0
+* ```ffmpeg```
 
 ## 설치 방법
 
+* 기본 설치 방법
+
+```
+$ pip install git+https://github.com/omnipede/youtube-caption-subclip-pipeline.git
+```
+
+* 또는, 직접 repository 를 다운로드 받아 사용해보는 경우 repository 디렉토리 내부에서 다음 커맨드 실행
 ```
 $ pip install -r requirements.txt
 ```
