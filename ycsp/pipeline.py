@@ -125,6 +125,10 @@ def __download_and_split_into_clips(url: str, resources_dir: str) -> None:
         # Get text of caption
         caption = p.text
 
+        # Caption 이 없으면 pass 처리
+        if caption is None:
+            continue
+
         # Caption 전처리
         caption = re.sub('[^A-Za-z0-9가-힣 ]', '', caption)
 
