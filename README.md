@@ -14,7 +14,7 @@
 $ pip install git+https://github.com/omnipede/youtube-caption-subclip-pipeline.git
 ```
 
-* 또는, 직접 repository 를 다운로드 받아 사용해보는 경우 repository 디렉토리 내부에서 다음 커맨드 실행
+* 또는, 직접 repository 를 다운로드 받아 사용해보는 경우 다운로드 받은 repository 디렉토리 내부에서 다음 커맨드를 실행한다.
 ```
 $ pip install -r requirements.txt
 ```
@@ -24,8 +24,8 @@ $ pip install -r requirements.txt
 ### Arguments
 | Argument | Description |
 | --- | --- |
-| -i (--input) | 처리할 Youtube URL 리스트가 저장된 input file path |
-| -o (--output) | Caption 과 subclip 을 저장할 output directory path (Optional) |
+| ```-i``` ```--input``` | 처리할 Youtube URL 리스트가 저장된 input file path |
+| ```-o``` ```--output``` | Caption 과 subclip 을 저장할 output directory path (Optional) |
 
 ### Input file 형식
 [example.txt](./example.txt) 처럼 다운로드 받을 유튜브 URL 리스트를 넣으면 된다. 
@@ -38,7 +38,6 @@ $ python -m ycsp -i ./example.txt
 
 실행 위치의 ```resources``` 디렉토리에 실행 결과가 저장된다. 실행 결과 관련 내용은 [실행 결과](#실행-결과) 항목 참조
 
-
 ### 출력 디렉토리 지정
 
 자막과 subclip 을 저장할 위치를 따로 지정할 수 있다.
@@ -47,7 +46,7 @@ $ python -m ycsp -i ./example.txt
 $ python -m ycsp -i ./example.txt -o /PATH/TO/YOUR/DIR
 ```
 
-### Help
+### Help 출력
 
 ```
 $ python -m ycsp --help
@@ -68,7 +67,3 @@ $ python -m ycsp --help
 
 유튜브 다운로드 시 [pytube](https://github.com/pytube/pytube) 라이브러리를 사용하고 있는데,  
 유튜브 다운로드 정책에 따라 라이브러리가 작동 하지 않는 경우가 종종 발생한다. 이 경우 라이브러리 github repo 에서 이슈를 확인해보고 이슈를 fix 한 브랜치를 사용하는 것으로 해결한다.
-
-## TODO
-
-* Rename module
