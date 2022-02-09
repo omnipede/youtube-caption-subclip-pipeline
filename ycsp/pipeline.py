@@ -27,6 +27,8 @@ def execute() -> None:
     for url in urls:
         __download_and_split_into_clips(url, output_dir_path)
 
+    logger.info(f"데이터 처리 완료. 데이터는 {output_dir_path} 에 저장되었습니다.")
+
 
 def __parse_args() -> tuple[str, str]:
     """
