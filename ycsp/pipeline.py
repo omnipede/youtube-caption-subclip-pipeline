@@ -8,7 +8,7 @@ from moviepy.tools import subprocess_call
 from pytube import YouTube
 from os import path
 
-from src.log import logger
+from ycsp.log import logger
 
 
 def execute() -> None:
