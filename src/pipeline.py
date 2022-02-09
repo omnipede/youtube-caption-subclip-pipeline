@@ -1,4 +1,5 @@
 import os
+import argparse
 import re
 import xml.etree.ElementTree as elemTree
 from moviepy.config import get_setting
@@ -15,10 +16,11 @@ def execute() -> None:
     Python youtube library 를 이용해서 동영상을 자막 단위로 나눔.
     """
 
-    # TODO parameterize input and output file
+    # Parse arguments
+    input_file_path, output_dir_path = __parse_args()
 
     # 파일을 읽어서 다운로드할 url 을 불러온다
-    urls = __read_youtube_url_from_input_file()
+    urls = __read_youtube_url_from_input_file(input_file_path)
     logger.info(f'# of target youtube urls: {len(urls)}')
 
     # Download files
@@ -26,18 +28,41 @@ def execute() -> None:
         __download_and_split_into_clips(url)
 
 
-def __read_youtube_url_from_input_file() -> list[str]:
+def __parse_args() -> tuple[str, str]:
+    """
+    모듈 argument 를 파싱하는 메소드
+    -i, --input --> Youtube URL 리스트가 저장된 파일의 위치
+    -o, --output --> caption, subclip 으로 나눈 결과를 저장할 위치
+    :return: (input_file_path, output_file_path)
+    """
+
+    # Default output directory
+    directory_of_current_script = os.path.dirname(os.path.realpath(__file__))
+    resources_dir = path.join(directory_of_current_script, '..', 'resources')
+
+    parser = argparse.ArgumentParser(description="Youtube captions & subclips pipeline script.")
+    parser.add_argument("-i", "--input", help="처리할 Youtube URL 리스트가 저장된 input file path", required=True)
+    parser.add_argument("-o", "--output", help="Caption 과 subclip 을 저장할 output directory path (Optional)", default=resources_dir)
+
+    args = parser.parse_args()
+
+    return args.input, args.output
+
+
+def __read_youtube_url_from_input_file(input_file_path: str) -> list[str]:
     """
     특정 위치에 존재하는 입력 파일을 읽고 youtube url 리스트를 반환하는 메소드
-    :return: Youtube URL list
+    :param input_file_path 입력 파일 경로
+    :return Youtube URL list
     """
-    directory_of_current_script = os.path.dirname(os.path.realpath(__file__))
-    input_file_loc = path.join(directory_of_current_script, '..', 'input.txt')
 
-    if not path.exists(input_file_loc):
-        raise FileNotFoundError(f"File not exists: {input_file_loc}")
+    if not path.exists(input_file_path):
+        raise FileNotFoundError(f"File not exists: {input_file_path}")
 
-    with open(input_file_loc, 'r') as f:
+    if not path.isfile(input_file_path):
+        raise FileNotFoundError(f"File {input_file_path} is not file.")
+
+    with open(input_file_path, 'r') as f:
         return f.readlines()
 
 
