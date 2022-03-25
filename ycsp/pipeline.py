@@ -107,7 +107,14 @@ def __download_and_split_into_clips(url: str, resources_dir: str) -> None:
         os.mkdir(clips_dir)
 
     # Get EN captions
+    print(yt.captions)
     captions = yt.captions.get("en", None)
+    if captions is None:
+        captions = yt.captions.get("en.nP7-2PuUl7o", None)
+    if captions is None:
+        captions = yt.captions.get("en-US", None)
+    if captions is None:
+        captions = yt.captions.get("en.eEY6OEpapPo", None)
     if captions is None:
         raise KeyError(f"Caption does not exists on {url}")
 
